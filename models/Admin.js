@@ -1,14 +1,8 @@
 import mongoose from "mongoose";
 
-const UserSchema = new mongoose.Schema(
+const AdminSchema = new mongoose.Schema(
   {
-    firstName: {
-      type: String,
-      required: true,
-      min: 2,
-      max: 50,
-    },
-    lastName: {
+    fullName: {
       type: String,
       required: true,
       min: 2,
@@ -29,10 +23,9 @@ const UserSchema = new mongoose.Schema(
       type: String,
       default: "",
     },
-    location: String,
   },
   { timestamps: true }
 );
 
-const User = mongoose.model("User", UserSchema);
-export default User;
+const Admin = mongoose.model("Admin", AdminSchema);
+export default Admin;
