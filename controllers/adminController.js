@@ -1,5 +1,6 @@
 import Facility from "../models/Facility.js";
 import Coupon from "../models/Coupon.js";
+import User from "../models/User.js";
 
 /*======================================== ADD & VIEW FACILITIES ======================================== */
 
@@ -38,7 +39,7 @@ export const allCoupon = async (req, res) => {
 
 export const addCoupon = async (req, res) => {
   const { couponName, couponCode, amount } = req.body;
-  const newCoupon = new Coupon(couponName, couponCode, amount);
+  const newCoupon = Coupon({ couponName, couponCode, amount });
   try {
     await newCoupon.save();
     res.status(201).json(newCoupon);
@@ -46,3 +47,13 @@ export const addCoupon = async (req, res) => {
     res.status(409).json({ message: err.message });
   }
 };
+
+
+export const allUser = async(req,res) => {
+  try {
+    const user = await User.find();
+    res.status(200).json(user)
+  } catch (err) {
+    res.status(404).json({ message: err.message });
+  }
+}

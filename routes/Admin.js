@@ -4,6 +4,7 @@ import {
   allFacilities,
   allCoupon,
   addCoupon,
+  allUser,
 } from "../controllers/adminController.js";
 
 const router = express.Router();
@@ -11,7 +12,9 @@ const router = express.Router();
 router.post("/addFacilities", addFacilities);
 router.get("/allFacilities", allFacilities);
 
-router.post("/allCoupon", allCoupon);
-router.get("/addCoupon", addCoupon);
+router.get("/allCoupon", allCoupon);
+router.post("/addCoupon", addCoupon);
+
+router.get("/allUser",allUser)
 
 export default router;

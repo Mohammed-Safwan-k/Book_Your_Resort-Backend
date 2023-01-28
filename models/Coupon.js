@@ -15,7 +15,7 @@ const CouponSchema = new mongoose.Schema({
     unique: true,
   },
   amount: {
-    type: Number,
+    type: String,
     required: true,
     min: 1,
     max: 3,
