@@ -1,6 +1,20 @@
 import Facility from "../models/Facility.js";
 import Coupon from "../models/Coupon.js";
 import User from "../models/User.js";
+import RoomType from "../models/RoomType.js";
+
+/*======================================== VIEW USERS ======================================== */
+
+export const allUser = async (req, res) => {
+  try {
+    const user = await User.find();
+    res.status(200).json(user);
+  } catch (err) {
+    res.status(404).json({ message: err.message });
+  }
+};
+
+/* ---------------------------------------- END ---------------------------------------- */
 
 /*======================================== ADD & VIEW FACILITIES ======================================== */
 
@@ -48,12 +62,28 @@ export const addCoupon = async (req, res) => {
   }
 };
 
+/* ---------------------------------------- END ---------------------------------------- */
 
-export const allUser = async(req,res) => {
+/* ======================================== ADD & VIEW ROOM ======================================== */
+
+export const allRoom = async (req, res) => {
   try {
-    const user = await User.find();
-    res.status(200).json(user)
+    const roomtype = await RoomType.find();
+    res.status(200).json(roomtype);
   } catch (err) {
     res.status(404).json({ message: err.message });
   }
-}
+};
+
+export const addRoom = async (req, res) => {
+  const { roomtype } = req.body;
+  const newRoomType = RoomType({ roomtype });
+  try {
+    await newRoomType.save();
+    res.status(201).json(newRoomType);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+/* ---------------------------------------- END ---------------------------------------- */
