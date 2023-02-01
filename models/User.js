@@ -30,6 +30,10 @@ const UserSchema = new mongoose.Schema(
       default: "",
     },
     location: String,
+    status: {
+      type: String,
+      default: "Unblocked",
+    },
   },
   { timestamps: true }
 );
