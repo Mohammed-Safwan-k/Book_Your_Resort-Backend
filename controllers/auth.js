@@ -4,16 +4,10 @@ import User from "../models/User.js";
 import Admin from "../models/Admin.js";
 
 /* REGISTER USER */
-export const register = async (req, res) => {
+export const register = async (req, res, next) => {
   try {
-    const {
-      firstName,
-      lastName,
-      email,
-      password,
-      picturePath,
-      location,
-    } = req.body;
+    const { firstName, lastName, email, password, picturePath, location } =
+      req.body;
 
     const salt = await bcrypt.genSalt();
     const passwordHash = await bcrypt.hash(password, salt);
@@ -29,12 +23,12 @@ export const register = async (req, res) => {
     const savedUser = await newUser.save();
     res.status(201).json(savedUser);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    next(err);
   }
 };
 
 /* LOGGING IN */
-export const login = async (req, res) => {
+export const login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
     const user = await User.findOne({ email: email });
@@ -47,12 +41,12 @@ export const login = async (req, res) => {
     delete user.password;
     res.status(200).json({ token, user });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    next(err);
   }
 };
 
 /* Admin Login */
-export const adminLogin = async (req, res) => {
+export const adminLogin = async (req, res, next) => {
   try {
     const { email, password } = req.body;
     const admin = await Admin.findOne({ email: email });
@@ -65,6 +59,6 @@ export const adminLogin = async (req, res) => {
     delete admin.password;
     res.status(200).json({ token, admin });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    next(err);
   }
 };

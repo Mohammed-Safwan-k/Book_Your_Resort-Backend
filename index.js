@@ -10,6 +10,7 @@ import { fileURLToPath } from "url";
 import authRoutes from "./routes/auth.js";
 import { register } from "./controllers/auth.js";
 import adminRoutes from "./routes/Admin.js";
+import resortRoutes from "./routes/Resort.js"
 
 /* CONFIGURATION */
 const __filename = fileURLToPath(import.meta.url);
@@ -43,6 +44,11 @@ app.use("/auth", authRoutes);
 
 /* ADMIN SIDE */
 app.use("/admin", adminRoutes);
+
+/* RESORT SIDE */
+app.use("/resort", resortRoutes);
+
+
 
 /* MONGOOSE SETUP */
 const PORT = process.env.PORT || 6001;
