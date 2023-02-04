@@ -10,7 +10,7 @@ import { fileURLToPath } from "url";
 import authRoutes from "./routes/auth.js";
 import { register } from "./controllers/auth.js";
 import adminRoutes from "./routes/Admin.js";
-import resortRoutes from "./routes/Resort.js"
+import resortRoutes from "./routes/Resort.js";
 
 /* CONFIGURATION */
 const __filename = fileURLToPath(import.meta.url);
@@ -48,7 +48,17 @@ app.use("/admin", adminRoutes);
 /* RESORT SIDE */
 app.use("/resort", resortRoutes);
 
-
+/* ERROR SIDE */
+app.use((err, req, res, next) => {
+  const errorStatus = err.status || 500;
+  const errorMessage = err.message || "Something Went Wrong!";
+  return res.status(errorStatus).json({
+    success: false,
+    status: errorStatus,
+    message: errorMessage,
+    stack: err.stack,
+  });
+});
 
 /* MONGOOSE SETUP */
 const PORT = process.env.PORT || 6001;

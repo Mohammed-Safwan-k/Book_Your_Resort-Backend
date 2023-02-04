@@ -2,6 +2,9 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import User from "../models/User.js";
 import Admin from "../models/Admin.js";
+import Resort from "../models/Resort.js";
+
+import { createError } from "../utils/error.js";
 
 /* REGISTER USER */
 export const register = async (req, res, next) => {
@@ -62,3 +65,50 @@ export const adminLogin = async (req, res, next) => {
     next(err);
   }
 };
+
+/* ======================================== RESORT LOGIN AND SIGNUP ======================================== */
+
+//* Resort Register/Signup *//
+export const resortSignup = async (req, res, next) => {
+  try {
+    const salt = bcrypt.genSaltSync(10);
+    const hash = bcrypt.hashSync(req.body.password, salt);
+
+    const newResort = new Resort({
+      resortName: req.body.resortName,
+      email: req.body.email,
+      phone: req.body.phone,
+      password: hash,
+    });
+    await newResort.save();
+    res.status(200).send("Resort has been created.");
+  } catch (err) {
+    next(err);
+  }
+};
+
+//* Resort Login/Signin *//
+export const resortLogin = async (req, res, next) => {
+  try {
+    const resort = await Resort.findOne({ email: req.body.email });
+    if (!resort) return next(createError(404, "Resort not found!"));
+
+    const isPasswordCorrect = await bcrypt.compare(
+      req.body.password,
+      resort.password
+    );
+    if (!isPasswordCorrect)
+      return next(createError(400, "Wrong Password or Email!"));
+
+    const token = jwt.sign(
+      { id: resort._id, Accepted: resort.status.Accepted },
+      process.env.JWT_SECRET
+    );
+
+    res.status(200).json(resort);
+  } catch (err) {
+    next(err);
+  }
+};
+
+/* ---------------------------------------- END ---------------------------------------- */
