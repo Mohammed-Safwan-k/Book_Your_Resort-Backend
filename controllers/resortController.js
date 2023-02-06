@@ -1,6 +1,8 @@
 import Resort from "../models/Resort.js";
 import Room from "../models/Room.js";
 
+/* ======================================== RESORT MANAGEMENT ======================================== */
+
 export const addResort = async (req, res, next) => {
   const newResort = new Resort(req.body);
   try {
@@ -41,12 +43,50 @@ export const getAllResort = async (req, res, next) => {
     next(err);
   }
 };
+/* ---------------------------------------- END ---------------------------------------- */
 
 /* ======================================== ROOM MANAGEMENT ======================================== */
-export const allRoom = async (req, res, next) => {
+
+export const addRoom = async (req, res, next) => {
+  const newRoom = new Room(req.body);
   try {
-    const resortId = req.params.resortid;
-    const newRoom = new Room(req.body);
+    const savedRoom = await newRoom.save();
+    res.status(200).json(savedRoom);
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const updateRoom = async (req, res, next) => {
+  try {
+    const updatedRoom = await Room.findByIdAndUpdate(
+      req.params.id,
+      { $set: req.body },
+      { new: true }
+    );
+    res.status(200).json(updatedRoom);
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const getRoom = async (req, res, next) => {
+  try {
+    const room = await Room.findById(req.params.id);
+    res.status(200).json(room);
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const getAllRoom = async (req, res, next) => {
+  try {
+    const rooms = await Room.find({
+      resort: req.body.resort,
+    })
+      .populate("roomType")
+      .populate("facility");
+    res.status(200).json(rooms);
   } catch (err) {
     next(err);
   }

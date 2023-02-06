@@ -4,7 +4,10 @@ import {
   updateResort,
   getResort,
   getAllResort,
-  allRoom
+  getAllRoom,
+  addRoom,
+  updateRoom,
+  getRoom,
 } from "../controllers/resortController.js";
 
 const router = express.Router();
@@ -14,12 +17,19 @@ router.post("/", addResort);
 // Update Resort
 router.put("/:id", updateResort);
 // Get Resort
-router.get("/:id", getResort);
+router.get("/singleResort/:id", getResort);
 // Get All Resort
 router.get("/", getAllResort);
 
 /* ======================================== ROOM MANAGEMENT ======================================== */
 
-router.get("/allRoom", allRoom);
+// Add Room
+router.post("/room", addRoom);
+// Update Room
+router.put("/room/:id", updateRoom);
+// Get Room
+router.get("/room/:id", getRoom);
+// Get All Room
+router.get("/room", getAllRoom);
 
 export default router;

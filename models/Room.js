@@ -8,7 +8,7 @@ const RoomSchema = new mongoose.Schema(
     },
     roomType: {
       type: mongoose.Types.ObjectId,
-      ref: "Resort",
+      ref: "RoomType",
       required: true,
     },
     facility: [
