@@ -2,7 +2,11 @@ import mongoose from "mongoose";
 
 const RoomSchema = new mongoose.Schema(
   {
-    RoomType: {
+    roomName: {
+      type: String,
+      required: true,
+    },
+    roomType: {
       type: mongoose.Types.ObjectId,
       ref: "Resort",
       required: true,
@@ -45,6 +49,11 @@ const RoomSchema = new mongoose.Schema(
       type: [String],
       required: true,
     },
+    unavailableDates: [
+      {
+        type: Date,
+      },
+    ],
   },
   { timestamps: true }
 );

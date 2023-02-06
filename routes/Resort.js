@@ -3,7 +3,8 @@ import {
   addResort,
   updateResort,
   getResort,
-  getAllResort
+  getAllResort,
+  allRoom
 } from "../controllers/resortController.js";
 
 const router = express.Router();
@@ -17,6 +18,8 @@ router.get("/:id", getResort);
 // Get All Resort
 router.get("/", getAllResort);
 
-// router.get("/allRoom", allRoom);
+/* ======================================== ROOM MANAGEMENT ======================================== */
+
+router.get("/allRoom", allRoom);
 
 export default router;

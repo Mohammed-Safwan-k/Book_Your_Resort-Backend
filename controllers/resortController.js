@@ -1,4 +1,5 @@
 import Resort from "../models/Resort.js";
+import Room from "../models/Room.js";
 
 export const addResort = async (req, res, next) => {
   const newResort = new Resort(req.body);
@@ -40,3 +41,14 @@ export const getAllResort = async (req, res, next) => {
     next(err);
   }
 };
+
+/* ======================================== ROOM MANAGEMENT ======================================== */
+export const allRoom = async (req, res, next) => {
+  try {
+    const resortId = req.params.resortid;
+    const newRoom = new Room(req.body);
+  } catch (err) {
+    next(err);
+  }
+};
+/* ---------------------------------------- END ---------------------------------------- */
