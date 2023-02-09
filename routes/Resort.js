@@ -10,26 +10,28 @@ import {
   getRoom,
 } from "../controllers/resortController.js";
 
+import {resortAuth} from "../middleware/auth.js";
+
 const router = express.Router();
 
 // Add Resort
-router.post("/", addResort);
+router.post("/", resortAuth, addResort);
 // Update Resort
-router.put("/:id", updateResort);
+router.put("/:id", resortAuth, updateResort);
 // Get Resort
-router.get("/singleResort/:id", getResort);
+router.get("/singleResort/:id", resortAuth, getResort);
 // Get All Resort
-router.get("/", getAllResort);
+router.get("/", resortAuth, getAllResort);
 
 /* ======================================== ROOM MANAGEMENT ======================================== */
 
 // Add Room
-router.post("/room", addRoom);
+router.post("/room", resortAuth, addRoom);
 // Update Room
-router.put("/room/:id", updateRoom);
+router.put("/room/:id", resortAuth, updateRoom);
 // Get Room
-router.get("/room/:id", getRoom);
+router.get("/room/:id", resortAuth, getRoom);
 // Get All Room
-router.get("/room", getAllRoom);
+router.get("/room", resortAuth, getAllRoom);
 
 export default router;

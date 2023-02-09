@@ -81,8 +81,10 @@ export const getRoom = async (req, res, next) => {
 
 export const getAllRoom = async (req, res, next) => {
   try {
+    if (!req.resortId) return res.json({ message: "Unauthanticated" });
+    
     const rooms = await Room.find({
-      resort: req.body.resort,
+      resort: req.resortId,
     })
       .populate("roomType")
       .populate("facility");

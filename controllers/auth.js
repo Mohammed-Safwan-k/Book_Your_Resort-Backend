@@ -74,6 +74,9 @@ export const resortSignup = async (req, res, next) => {
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(req.body.password, salt);
 
+    const existingResort = await Resort.findOne({ email: req.body.email });
+    if (existingResort) return next(createError(400, "Resort Already Exist!"));
+
     const newResort = new Resort({
       resortName: req.body.resortName,
       email: req.body.email,
@@ -101,11 +104,12 @@ export const resortLogin = async (req, res, next) => {
       return next(createError(400, "Wrong Password or Email!"));
 
     const token = jwt.sign(
-      { id: resort._id, Accepted: resort.status.Accepted },
-      process.env.JWT_SECRET
+      { id: resort._id, email: resort.email },
+      process.env.JWT_SECRET,
+      { expiresIn: "1h" }
     );
 
-    res.status(200).json(resort);
+    res.status(200).json({ resort, token });
   } catch (err) {
     next(err);
   }
