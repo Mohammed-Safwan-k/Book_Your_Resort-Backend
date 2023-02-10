@@ -53,9 +53,6 @@ const ResortSchema = new mongoose.Schema(
     maxPrice: {
       type: Number,
     },
-    rooms: {
-      type: [String],
-    },
     featured: {
       type: Boolean,
       default: false,

@@ -20,19 +20,38 @@ export const verifyToken = async (req, res) => {
   }
 };
 
-export const resortAuth = async (req, res, next) => {
+export const postResortAuth = async (req, res, next) => {
   try {
-    const token = req.headers.Authorization.split(" ")[1];
-    let decodedData;
+    let token = req.body.headers.Authorization;
+
     if (!token) {
+      token = req.header("Authorization");
       return res.status(403).send("Acess Denied");
     }
-    decodedData = jwt.verify(token, process.env.JWT_SECRET);
 
-    req.resortId = decodedData?.id;
+    const resort = await jwt.verify(token, process.env.JWT_SECRET);
+    req.resort = resort.email;
+    req.id = resort.id;
 
     next();
   } catch (error) {
-    console.log(error);
+    res.status(403).send("Invalid Token");
+  }
+};
+
+export const getResortAuth = async (req, res, next) => {
+  try {
+    let token = req.header("Authorization");
+    if (!token) {
+      return res.status(403).send("Acess Denied");
+    }
+
+    const resort = await jwt.verify(token, process.env.JWT_SECRET);
+    req.resort = resort.email;
+    req.id = resort.id;
+
+    next();
+  } catch (error) {
+    res.status(403).send("Invalid Token");
   }
 };

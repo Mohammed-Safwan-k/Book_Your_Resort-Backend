@@ -104,9 +104,11 @@ export const resortLogin = async (req, res, next) => {
       return next(createError(400, "Wrong Password or Email!"));
 
     const token = jwt.sign(
-      { id: resort._id, email: resort.email },
+      { email: resort.email, id: resort._id },
       process.env.JWT_SECRET,
-      { expiresIn: "1h" }
+      {
+        expiresIn: "1h",
+      }
     );
 
     res.status(200).json({ resort, token });

@@ -1,3 +1,4 @@
+import Facility from "../models/Facility.js";
 import Resort from "../models/Resort.js";
 import Room from "../models/Room.js";
 
@@ -81,14 +82,28 @@ export const getRoom = async (req, res, next) => {
 
 export const getAllRoom = async (req, res, next) => {
   try {
-    if (!req.resortId) return res.json({ message: "Unauthanticated" });
-    
+    if (!req.resort) return res.json({ message: "Unauthanticated" });
+
+    const resortId = await Resort.findOne({ email: req.resort });
+
     const rooms = await Room.find({
-      resort: req.resortId,
+      resort: resortId._id,
     })
       .populate("roomType")
       .populate("facility");
     res.status(200).json(rooms);
+  } catch (err) {
+    next(err);
+  }
+};
+/* ---------------------------------------- END ---------------------------------------- */
+
+/* ======================================== ROOM MANAGEMENT ======================================== */
+
+export const getAllFacility = async (req, res, next) => {
+  try {
+    const facility = await Facility.find();
+    res.status(200).json(facility);
   } catch (err) {
     next(err);
   }

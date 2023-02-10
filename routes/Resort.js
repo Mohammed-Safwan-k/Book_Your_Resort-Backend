@@ -8,30 +8,37 @@ import {
   addRoom,
   updateRoom,
   getRoom,
+  getAllFacility,
 } from "../controllers/resortController.js";
 
-import {resortAuth} from "../middleware/auth.js";
+import { getResortAuth } from "../middleware/auth.js";
+import { postResortAuth } from "../middleware/auth.js";
 
 const router = express.Router();
 
 // Add Resort
-router.post("/", resortAuth, addResort);
+router.post("/", postResortAuth, addResort);
 // Update Resort
-router.put("/:id", resortAuth, updateResort);
+router.put("/:id", postResortAuth, updateResort);
 // Get Resort
-router.get("/singleResort/:id", resortAuth, getResort);
+router.get("/singleResort/:id", postResortAuth, getResort);
 // Get All Resort
-router.get("/", resortAuth, getAllResort);
+router.get("/", postResortAuth, getAllResort);
 
 /* ======================================== ROOM MANAGEMENT ======================================== */
 
 // Add Room
-router.post("/room", resortAuth, addRoom);
+router.post("/room", postResortAuth, addRoom);
 // Update Room
-router.put("/room/:id", resortAuth, updateRoom);
+router.put("/room/:id", postResortAuth, updateRoom);
 // Get Room
-router.get("/room/:id", resortAuth, getRoom);
+router.get("/room/:id", postResortAuth, getRoom);
 // Get All Room
-router.get("/room", resortAuth, getAllRoom);
+router.post("/allroom", postResortAuth, getAllRoom);
+
+/* ======================================== Facility ======================================== */
+
+// All Facility
+router.get("/facility", getResortAuth, getAllFacility);
 
 export default router;
