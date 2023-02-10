@@ -9,6 +9,7 @@ import {
   updateRoom,
   getRoom,
   getAllFacility,
+  getAllRoomType
 } from "../controllers/resortController.js";
 
 import { getResortAuth } from "../middleware/auth.js";
@@ -40,5 +41,6 @@ router.post("/allroom", postResortAuth, getAllRoom);
 
 // All Facility
 router.get("/facility", getResortAuth, getAllFacility);
+router.get("/roomtype", getResortAuth, getAllRoomType);
 
 export default router;

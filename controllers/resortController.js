@@ -1,6 +1,7 @@
 import Facility from "../models/Facility.js";
 import Resort from "../models/Resort.js";
 import Room from "../models/Room.js";
+import RoomType from "../models/RoomType.js";
 
 /* ======================================== RESORT MANAGEMENT ======================================== */
 
@@ -104,6 +105,15 @@ export const getAllFacility = async (req, res, next) => {
   try {
     const facility = await Facility.find();
     res.status(200).json(facility);
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const getAllRoomType = async (req, res, next) => {
+  try {
+    const roomtype = await RoomType.find();
+    res.status(200).json(roomtype);
   } catch (err) {
     next(err);
   }
