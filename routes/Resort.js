@@ -29,7 +29,7 @@ router.get("/", postResortAuth, getAllResort);
 /* ======================================== ROOM MANAGEMENT ======================================== */
 
 // Add Room
-router.post("/room", postResortAuth, addRoom);
+router.post("/addroom", postResortAuth, addRoom);
 // Update Room
 router.put("/room/:id", postResortAuth, updateRoom);
 // Get Room
@@ -41,6 +41,8 @@ router.post("/allroom", postResortAuth, getAllRoom);
 
 // All Facility
 router.get("/facility", getResortAuth, getAllFacility);
+
 router.get("/roomtype", getResortAuth, getAllRoomType);
+
 
 export default router;
